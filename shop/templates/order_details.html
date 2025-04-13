@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load humanize%}
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'IRANYekan';
+        src: url('/static/fonts/iran-yekan.woff2') format('woff2'),
+             url('/static/fonts/iran-yekan.woff') format('woff');
+    }
+
+    @font-face {
+        font-family: 'IranSans';
+        src: url('/static/fonts/iran-sans.woff2') format('woff2'),
+             url('/static/fonts/iran-sans.woff') format('woff');
+    }
+
+    table {
+        font-family: 'IRANYekan', 'IranSans';
+    }
+</style>
+
+<br><br> 
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-10">
+            
+              <h3>جزئیات سفارش</h3>
+
+              <div class="card">
+                <div class="card-header">
+                  سفارش {{ order.id }} - {{ order.amount_paid|intcomma }} تومان
+                </div>
+                <div class="card-body">
+                  به نام: {{ order.full_name }} <br>
+                  ایمیل: {{ order.email}} <br>
+                  آدرس: {{ order.Shipping_adress }} <br>
+                  تاریخ ثبت: {{order.date_ordered|date:"Y-m-d H:i:s" }} <br>
+                  آخرین ویرایش: {{ order.last_update|date:"Y-m-d H:i:s" }} <br>
+                  وضعیت: {{ order.get_status_display }} <br>
+                  <hr>
+                  کالاها:<br>
+                  {% for item in items %}
+                    {{ item.product }} | تعداد {{ item.quantity }} عدد | {{ item.price|intcomma }} تومان <br>
+                  {% endfor %}
+                </div>
+              </div>  
+              <br>
+              <a href="{% url 'orders' %}" class="btn btn-primary">بازگشت به سفارشات</a>     
+            </div>    
+        </center>    
+    </div>            
+</div>
+<br><br>    
+{% endblock %}
